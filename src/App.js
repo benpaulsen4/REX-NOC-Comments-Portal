@@ -29,7 +29,7 @@ function App() {
   function Notifier() {
     if (notify) {
       return (
-        <div className='container'>
+        <div className='notif'>
           <Toast>
             <ToastHeader>Congrats!</ToastHeader>
             <ToastBody>You pressed a button! Good job~</ToastBody>

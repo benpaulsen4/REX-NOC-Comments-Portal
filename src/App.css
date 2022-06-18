@@ -10,6 +10,7 @@
 
 .App-body {
   background-color: #454749;
+  position: relative;
 }
 
 .App-footer {
@@ -32,4 +33,9 @@
 
 .align-right {
   text-align: right;
+}
+
+.notif {
+  position: absolute; top: 0; right: 0;
+  padding: 1rem;
 }
