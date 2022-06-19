@@ -30,7 +30,6 @@ function App() {
   }
 
   const siteUpdate = (newSite) => {
-    console.log(newSite);
     if (newSite === 3){
       setDisableNodes(false);
     } else {
