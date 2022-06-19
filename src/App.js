@@ -12,6 +12,9 @@ function App() {
   const [username, setUsername] = useState("");
   const [comment, setComment] = useState("");
   const [notify, setNotify] = useState(false);
+  const [node, setNode] = useState(0);
+  const [site, setSite] = useState(0);
+  const [disableNodes, setDisableNodes] = useState(true);
 
   const toggleDropdown1 = () => {
     setDropdown1(!dropdown1Open);
@@ -24,6 +27,16 @@ function App() {
   const submitClick = () => {
     setNotify(true);
     setTimeout(() => setNotify(false), 5000);
+  }
+
+  const siteUpdate = (newSite) => {
+    console.log(newSite);
+    if (newSite === 3){
+      setDisableNodes(false);
+    } else {
+      setDisableNodes(true);
+    }
+    setSite(newSite);
   }
 
   function Notifier() {
@@ -43,15 +56,15 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} alt='REX logo' className='App-logo'/>
+        <img src={logo} alt='REX logo' className='App-logo' />
       </header>
       <Notifier />
       <body className='App-body'>
         <div className='container py-4'>
-        <div className='p-5 mb-4 text-white bg-dark super-rounded'>
+          <div className='p-5 mb-4 text-white bg-dark super-rounded'>
             <h1 className='display-5 fw-bold'>NOC Comment Portal</h1>
-          <div className='container-fluid py-4 my-content'>
-            
+            <div className='container-fluid py-4 my-content'>
+
               <div className='p-3'>
                 <Dropdown isOpen={dropdown1Open} toggle={toggleDropdown1}>
                   <DropdownToggle caret>
@@ -62,34 +75,40 @@ function App() {
                     <DropdownItem>Distributed</DropdownItem>
                   </DropdownMenu>
                 </Dropdown>
-                </div>
+              </div>
 
-                <div className='p-3'>
-              <Dropdown isOpen={dropdown2Open} toggle={toggleDropdown2}>
-                <DropdownToggle caret>
-                  Select site/node
-                </DropdownToggle>
-                <DropdownMenu>
-                  <DropdownItem>Cairns St</DropdownItem>
-                  <DropdownItem>Somewhere else</DropdownItem>
-                </DropdownMenu>
-              </Dropdown>
-            </div>
+              <div className='p-3'>
+                <Dropdown isOpen={dropdown2Open} toggle={toggleDropdown2}>
+                  <DropdownToggle caret>
+                    Select site
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    <DropdownItem onClick={() => siteUpdate(1)}>Cairns St</DropdownItem>
+                    <DropdownItem onClick={() => siteUpdate(2)}>Somewhere else</DropdownItem>
+                    <DropdownItem onClick={() => siteUpdate(3)}>Site w/ nodes</DropdownItem>
+                  </DropdownMenu>
+                </Dropdown>
+              </div>
 
-                <div className='p-3'>
+              <div className='p-3 node-input'>
+                <Label for='node'>Node:</Label>
+                <Input type='number' id='node' disabled={disableNodes} value={node} onChange={(event) => setNode(event.target.value)} />
+              </div>
+
+              <div className='p-3'>
                 <Label for='user'>Name:</Label>
-                  <Input placeholder='Name' id='user' value={username} onChange={(event) => setUsername(event.target.value)} />
+                <Input id='user' value={username} onChange={(event) => setUsername(event.target.value)} />
               </div>
               <div className='p-3'>
-                  <Label for='comment'>Comment:</Label>
-                  <Input id='comment' type='textarea' value={comment} onChange={(event) => setComment(event.target.value)} />
+                <Label for='comment'>Comment:</Label>
+                <Input id='comment' type='textarea' value={comment} onChange={(event) => setComment(event.target.value)} />
               </div>
-              
-          </div>
+
+            </div>
             <div className='align-right'>
               <Button onClick={submitClick}>Submit</Button>
             </div>
-        </div>
+          </div>
         </div>
       </body>
       <footer className='App-footer'>
