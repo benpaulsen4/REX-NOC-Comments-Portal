@@ -15,25 +15,6 @@ const config = {
     port: 1433
 };
 
-// function queryDatabase(query) {
-//     const connection = new Connection(config);
-//     connection.connect();
-//     connection.on("connect", err => {
-//         if (err) {
-//             console.error(err.message);
-//         }});
-
-//     const request = new Request(query,
-//         (err, rowCount) => {
-//             if (err) {
-//                 console.error(err.message);
-//             }
-//         }
-//     );
-
-//     connection.execSql(request);
-// }
-
 async function newComment(json) {
     let pool = await sql.connect(config);
 
@@ -47,5 +28,12 @@ async function newComment(json) {
     return result.recordset;
 }
 
-//site list returns all device/site pairs
-module.exports = {newComment}
+async function getSites(){
+    let pool = await sql.connect(config);
+
+    const result = await pool.request().execute(`SiteList`);
+
+    return result.recordset;
+}
+
+module.exports = {newComment, getSites}

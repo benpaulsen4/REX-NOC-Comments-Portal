@@ -2,7 +2,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import logo from './logo.svg'
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Input, Button, Label, Toast, ToastBody, ToastHeader } from 'reactstrap';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const AppVer = "0.5"
 
@@ -64,6 +64,11 @@ function App() {
     } else return;
   }
 
+  useEffect(() => {
+    fetch('/sites')
+      .then(res => res.json())
+      .then(res => console.log(res));
+  });
 
   return (
     <div className="App">
