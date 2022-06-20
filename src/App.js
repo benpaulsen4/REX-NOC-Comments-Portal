@@ -4,11 +4,10 @@ import logo from './logo.svg'
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Input, Button, Label, Toast, ToastBody, ToastHeader } from 'reactstrap';
 import { useState } from 'react';
 
-const AppVer = "0.1"
+const AppVer = "0.5"
 
 function App() {
   const [dropdown1Open, setDropdown1] = useState(false);
-  const [dropdown2Open, setDropdown2] = useState(false);
   const [username, setUsername] = useState("");
   const [comment, setComment] = useState("");
   const [notify, setNotify] = useState(false);
@@ -20,12 +19,9 @@ function App() {
     setDropdown1(!dropdown1Open);
   }
 
-  const toggleDropdown2 = () => {
-    setDropdown2(!dropdown2Open);
-  }
-
   const submitClick = () => {
     setNotify(true);
+    createComment();
     setTimeout(() => setNotify(false), 5000);
   }
 
@@ -36,6 +32,23 @@ function App() {
       setDisableNodes(true);
     }
     setSite(newSite);
+  }
+
+  const createComment = async () => {
+    await fetch ('/new', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        'site': site,
+        'node': node,
+        'name': username,
+        'comment': comment
+      })
+    })
+    .then(res => res.json());
   }
 
   function Notifier() {
@@ -63,21 +76,8 @@ function App() {
           <div className='p-5 mb-4 text-white bg-dark super-rounded'>
             <h1 className='display-5 fw-bold'>NOC Comment Portal</h1>
             <div className='container-fluid py-4 my-content'>
-
               <div className='p-3'>
                 <Dropdown isOpen={dropdown1Open} toggle={toggleDropdown1}>
-                  <DropdownToggle caret>
-                    Select site type
-                  </DropdownToggle>
-                  <DropdownMenu>
-                    <DropdownItem>Commercial EN</DropdownItem>
-                    <DropdownItem>Distributed</DropdownItem>
-                  </DropdownMenu>
-                </Dropdown>
-              </div>
-
-              <div className='p-3'>
-                <Dropdown isOpen={dropdown2Open} toggle={toggleDropdown2}>
                   <DropdownToggle caret>
                     Select site
                   </DropdownToggle>
