@@ -19,11 +19,11 @@ async function newComment(json) {
     let pool = await sql.connect(config);
 
     const result = await pool.request()
-        .input('device', `'${json.site}'`)
-        .input('site', `'${json.node}'`)
+        .input('device', json.site)
+        .input('site', json.node)
         .input('time', new Date())
-        .input('user', `'${json.name}'`)
-        .input('comment', `'${json.comment}'`)
+        .input('user', json.name)
+        .input('comment', json.comment)
         .execute(`AddComment`);
     return result.recordset;
 }

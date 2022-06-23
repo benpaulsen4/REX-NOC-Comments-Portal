@@ -12,24 +12,30 @@ function App() {
   const [comment, setComment] = useState("");
   const [notify, setNotify] = useState(false);
   const [node, setNode] = useState(0);
-  const [site, setSite] = useState(0);
+  const [site, setSite] = useState("");
   const [disableNodes, setDisableNodes] = useState(true);
+  const [siteArray, setSiteArray] = useState([]);
+  const [sitesWithNodes, setWithNodes] = useState([]);
+  const [notifyHeader, setNotifyHeader] = useState("");
+  const [notifyBody, setNotifyBody] = useState("");
 
   const toggleDropdown1 = () => {
     setDropdown1(!dropdown1Open);
   }
 
   const submitClick = () => {
+    setNotifyHeader("Comment Sent")
+    setNotifyBody(`The comment for site ${site} has been sent to the server`)
     setNotify(true);
     createComment();
     setTimeout(() => setNotify(false), 5000);
   }
 
   const siteUpdate = (newSite) => {
-    if (newSite === 3){
-      setDisableNodes(false);
-    } else {
-      setDisableNodes(true);
+    setNode(0);
+    setDisableNodes(true);
+    for (let i = 0; i < sitesWithNodes.length; i++){
+      if (sitesWithNodes[i] === newSite) setDisableNodes(false);
     }
     setSite(newSite);
   }
@@ -43,7 +49,7 @@ function App() {
       },
       body: JSON.stringify({
         'site': site,
-        'node': node,
+        'node':  node === 0 ? "Site_1" : `Node_${node}`,
         'name': username,
         'comment': comment
       })
@@ -56,19 +62,31 @@ function App() {
       return (
         <div className='notif'>
           <Toast>
-            <ToastHeader>Congrats!</ToastHeader>
-            <ToastBody>You pressed a button! Good job~</ToastBody>
+            <ToastHeader>{notifyHeader}</ToastHeader>
+            <ToastBody>{notifyBody}</ToastBody>
           </Toast>
         </div>
       );
     } else return;
   }
 
+  let siteSet = new Set();
+
   useEffect(() => {
     fetch('/sites')
       .then(res => res.json())
-      .then(res => console.log(res));
-  });
+      .then(res => res["result"].forEach(i => {
+        console.log(i);
+        if (i["Site"] === "Node_1"){
+          let temp = Array.from(sitesWithNodes);
+          temp.push(i["Device Name"]);
+          setWithNodes(temp);
+        }
+        siteSet.add(i["Device Name"]);
+      }))
+      .then(() => setSiteArray(Array.from(siteSet)));
+    
+  }, []);
 
   return (
     <div className="App">
@@ -87,9 +105,7 @@ function App() {
                     Select site
                   </DropdownToggle>
                   <DropdownMenu>
-                    <DropdownItem onClick={() => siteUpdate(1)}>Cairns St</DropdownItem>
-                    <DropdownItem onClick={() => siteUpdate(2)}>Somewhere else</DropdownItem>
-                    <DropdownItem onClick={() => siteUpdate(3)}>Site w/ nodes</DropdownItem>
+                    {siteArray.map(i => <DropdownItem onClick={() => siteUpdate(i)}>{i}</DropdownItem>)}
                   </DropdownMenu>
                 </Dropdown>
               </div>
