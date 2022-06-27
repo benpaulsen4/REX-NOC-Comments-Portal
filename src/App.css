@@ -1,6 +1,7 @@
 .App {
   text-align: center;
   background-color: #454749;
+  position: relative;
 }
 
 .App-header {
@@ -42,4 +43,10 @@
 
 .node-input {
   width: 10rem;
+}
+
+.delete-button {
+  position: absolute; top: 0; right: 0;
+  padding: 2rem;
+  padding-right: 3rem;
 }

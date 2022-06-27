@@ -36,4 +36,26 @@ async function getSites(){
     return result.recordset;
 }
 
-module.exports = {newComment, getSites}
+//FindComments - device
+async function getComments(json){
+    let pool = await sql.connect(config);
+
+    const result = await pool.request()
+        .input('device', json.site)
+        .execute(`FindComments`);
+    return result.recordset;
+}
+
+//DeleteComment - device, site, time, user
+async function deleteComment(json){
+    let pool = await sql.connect(config);
+
+    const result = await pool.request()
+        .input('device', json.site)
+        .input('site', json.node)
+        .input('time', json.time)
+        .input('user', json.name)
+        .execute(`DeleteComment`);
+}
+
+module.exports = {newComment, getSites, getComments, deleteComment}
