@@ -1,70 +1,19 @@
-# Getting Started with Create React App
+# REX Energy NOC Comment Portal
+This web app allows NOC users to create and delete comments in the database. These comments are then subsequently displayed on the NOC PowerBI report.
+## License
+REX Energy branding, including the 'X' logo are (c) REX Energy 2022. All non-brand related code/assets are distributed under GPLv3 as a result of contractual agreements with the technology team. 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Limitations
+At this time, the app itself is incomplete. The app can successfully add comments to the database, but the deletion functionality is not completed. Please delete comments from the database directly for them time being. 
 
-## Available Scripts
+Also, the way in which the app currently decides the existing sites is through entries in the comment database itself. As such, for a site to be selectable, there must be at least one dummy entry in the database associated with it.
 
-In the project directory, you can run:
+# Installation
+This combination React/Express app is bundled in a single Node package. To install it, simply clone the repository and run ```npm init``` in its respective directory. 
 
-### `npm start`
+Additionally, you must specify your MSSQL database configuration in ```dbconfig.json``` (not included in this repository for obvious security reasons). See the [Node MSSQL Documentation](https://www.npmjs.com/package/mssql) for more information on what this should look like.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# Running
+As this app is both a react and express server, they must be started separately. Once in the right directory you can start the backend server by running: <br>
+```npm run server``` <br>
+The React app itself should be built before running in production. Run ```npm build``` and then in the build directory run ```npm start``` to get it up and running.
