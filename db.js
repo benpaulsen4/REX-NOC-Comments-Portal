@@ -1,20 +1,9 @@
 const sql = require("mssql");
 
-// Create connection to database
-const config = {
-    user: "NOCCommenter",
-    password: "SilverTrain90",
-    server: "rexx1.database.windows.net",
-    database: "REXX1",
-    options: {
-        trustServerCertificate: true,
-        trustedConnection: false,
-        enableArithAbort: true,
-        instancename: "MSSQLSERVER"
-    },
-    port: 1433
-};
+//Input file must be specified with MSSQL required info
+const config = require('./dbconfig.json');
 
+//Takes JSON input and runs DB function 
 async function newComment(json) {
     let pool = await sql.connect(config);
 
@@ -28,6 +17,7 @@ async function newComment(json) {
     return result.recordset;
 }
 
+//Gets sites from DB with no input
 async function getSites(){
     let pool = await sql.connect(config);
 
@@ -36,7 +26,7 @@ async function getSites(){
     return result.recordset;
 }
 
-//FindComments - device
+//Gets comments of current site given input, for delete function
 async function getComments(json){
     let pool = await sql.connect(config);
 
@@ -46,7 +36,7 @@ async function getComments(json){
     return result.recordset;
 }
 
-//DeleteComment - device, site, time, user
+//Executes a DB function to delete a comment given input
 async function deleteComment(json){
     let pool = await sql.connect(config);
 
