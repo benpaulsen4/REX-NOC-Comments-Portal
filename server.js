@@ -19,7 +19,7 @@ app.post('/new', async(req, res) => {
     result = await db.newComment(req.body);
     console.log("Comment created");
     console.log(result);
-    res.send(200);
+    res.sendStatus(200);
 });
 
 //Route for app to get all sites
@@ -43,7 +43,7 @@ app.post('/delete', async(req, res) => {
     result = await db.deleteComment(req.body);
     console.log("Deleting comment");
     console.log(result);
-    res.send(200);
+    res.sendStatus(200);
 });
 
 app.listen(API_PORT, () => console.log(`Listening on port ${API_PORT}`));
